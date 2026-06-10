@@ -15,10 +15,12 @@ pub fn get_uptime() -> std::io::Result<()> {
             Err(e) => println!("{}", e),
         }
     }
-    let kogu_aeg: f32 = buff_vec[0].parse().unwrap();
-    let tunnid = kogu_aeg / 3600.0;
+    let kogu_aeg: i32 = buff_vec[0].parse::<f64>().unwrap() as i32;
+    let tunnid = kogu_aeg / 3600;
+    let minutes = (kogu_aeg % 3600) / 60;
+    let seconds = kogu_aeg % 60;
 
-    println!("{:?}", &tunnid);
+    println!("{:?}h {:?}min {:?}s", &tunnid, &minutes, &seconds);
 
     Ok(())
 }
