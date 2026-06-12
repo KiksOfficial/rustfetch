@@ -1,4 +1,4 @@
-use std::{fs, io, path::Path};
+use std::{fs, io};
 
 pub fn about_gpu() -> io::Result<()> {
     let dir = "/proc/driver/nvidia/gpus";
