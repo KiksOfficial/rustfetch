@@ -1,8 +1,8 @@
 use std::fs;
 
-pub fn get_ram() -> std::io::Result<()> {
+pub fn get_ram() -> std::io::Result<String> {
     let mut total_ram: u64 = 0;
-    let mut free_ram: u64 = 0;
+    let mut available_ram: u64 = 0;
 
     let meminfo = fs::read_to_string("/proc/meminfo")?;
 
@@ -16,15 +16,17 @@ pub fn get_ram() -> std::io::Result<()> {
 
             match key {
                 "MemTotal" => total_ram = kb,
-                "MemFree" => free_ram = kb,
+                "MemAvailable" => available_ram = kb,
                 _ => {}
             }
         }
     }
 
-    let vastus = (1.0 - free_ram as f64 / total_ram as f64) * 100.0;
+    if total_ram == 0 {
+        return Err(std::io::Error::other("MemTotal not found"));
+    }
 
-    println!("{}%", &vastus.round());
+    let used_percent = (total_ram - available_ram) as f64 / total_ram as f64 * 100.0;
 
-    Ok(())
+    Ok(format!("{:.0}%", used_percent))
 }

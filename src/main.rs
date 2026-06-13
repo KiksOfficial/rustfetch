@@ -7,13 +7,20 @@ use get_cpu::about_cpu;
 use get_gpu::about_gpu;
 use get_ram::get_ram;
 use get_uptime::get_uptime;
+
 fn main() {
-    println!("Hello, world!");
-    let _ = get_uptime();
+    if let Ok(info) = get_uptime() {
+        println!("{}", &info);
+    }
     match about_cpu() {
         Ok(n) => println!("{}", n),
         Err(e) => eprintln!("{}", e),
     }
-    let _ = about_gpu();
-    let _ = get_ram();
+    if let Ok(info) = about_gpu() {
+        println!("{}", &info);
+    }
+    match get_ram() {
+        Ok(n) => println!("{}", n),
+        Err(e) => eprintln!("{}", e),
+    }
 }
