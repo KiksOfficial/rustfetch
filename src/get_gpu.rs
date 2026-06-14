@@ -9,7 +9,9 @@ pub fn about_gpu() -> io::Result<String> {
                 let s = fs::read_to_string(&p)?;
                 for line in s.lines() {
                     if line.starts_with("Model") {
-                        return Ok(line.to_string());
+                        if let Some((_, model)) = line.split_once(':') {
+                            return Ok(model.trim().to_string());
+                        }
                     }
                 }
             }
