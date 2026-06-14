@@ -14,24 +14,24 @@ use get_uptime::get_uptime;
 
 fn main() {
     if let Ok(info) = get_uptime() {
-        println!("Uptime: {}", &info);
+        println!(r"   / \__                    Uptime: {}", &info);
     }
     match about_cpu() {
-        Ok(n) => println!("CPU: {}", n),
+        Ok(n) => println!(r"  (    @\___                CPU: {}", n),
         Err(e) => eprintln!("{}", e),
     }
     if let Ok(info) = about_gpu() {
-        println!("GPU: {}", &info);
+        println!(r"  /         O               GPU: {}", &info);
     }
     match get_ram() {
-        Ok(n) => println!("Memory: {}", n),
+        Ok(n) => println!(r" /   (_____/                Memory: {}", n),
         Err(e) => eprintln!("{}", e),
     }
     if let Ok(info) = get_os() {
-        println!("OS: {}", &info);
+        println!(r" /_____/   U                OS: {}", &info);
     }
 
     if let Ok(info) = get_host() {
-        println!("Host: {}", &info);
+        println!(r"                            Host: {}", &info);
     }
 }
