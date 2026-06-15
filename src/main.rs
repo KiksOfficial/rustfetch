@@ -10,7 +10,8 @@ use get_cpu::about_cpu;
 use get_gpu::about_gpu;
 use get_host::get_host;
 use get_kernel::get_kernel;
-use get_os::get_os;
+use get_os::{get_desktop, get_os, get_shell};
+
 use get_ram::get_ram;
 use get_uptime::get_uptime;
 
@@ -20,24 +21,32 @@ fn main() {
     }
 
     if let Ok(info) = get_os() {
-        println!(r"   / \__                    OS: {}", &info);
+        println!(r"         / \__              OS: {}", &info);
     }
 
     if let Ok(info) = get_kernel() {
-        println!(r"  (    @\___                Kernel: {}", &info);
+        println!(r"        (    @\___          Kernel: {}", &info);
+    }
+
+    if let Some(info) = get_shell() {
+        println!(r"        /         O         Shell: {}", &info);
+    }
+
+    if let Some(info) = get_desktop() {
+        println!(r"       /   (_____/          WM: {}", &info);
     }
 
     if let Ok(info) = get_uptime() {
-        println!(r"  /         O               Uptime: {}", &info);
+        println!(r"       /_____/  U           Uptime: {}", &info);
     }
 
     match about_cpu() {
-        Ok(n) => println!(r" /   (_____/                CPU: {}", n),
+        Ok(n) => println!(r"                            CPU: {}", n),
         Err(e) => eprintln!("{}", e),
     }
 
     if let Ok(info) = about_gpu() {
-        println!(r" /_____/  U                 GPU: {}", &info);
+        println!(r"                            GPU: {}", &info);
     }
 
     match get_ram() {
