@@ -23,3 +23,11 @@ pub fn get_shell() -> Option<String> {
         .file_name()
         .map(|s| s.to_string_lossy().into_owned())
 }
+pub fn count_pkg() -> std::io::Result<usize> {
+    let count = fs::read_dir("/var/lib/pacman/local")?
+        .filter_map(Result::ok)
+        .filter(|e| e.path().is_dir())
+        .count();
+
+    Ok(count)
+}

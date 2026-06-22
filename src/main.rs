@@ -10,7 +10,7 @@ use get_cpu::about_cpu;
 use get_gpu::about_gpu;
 use get_host::get_host;
 use get_kernel::get_kernel;
-use get_os::{get_desktop, get_os, get_shell};
+use get_os::{count_pkg, get_desktop, get_os, get_shell};
 
 use get_ram::get_ram;
 use get_uptime::get_uptime;
@@ -52,5 +52,8 @@ fn main() {
     match get_ram() {
         Ok(n) => println!(r"                            Memory: {}", n),
         Err(e) => eprintln!("{}", e),
+    }
+    if let Ok(info) = count_pkg() {
+        println!(r"                            Packages: {}", &info);
     }
 }
